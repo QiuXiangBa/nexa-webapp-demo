@@ -24,6 +24,7 @@ const loading = ref(false);
 const loadError = ref('');
 const overview = ref<HomeOverview | null>(null);
 const activeTab = ref(0);
+const incomeTabCount = 2;
 
 const consumerTrendPoints = ref<HomeTrendPoint[]>([]);
 const zspaceTrendPoints = ref<HomeTrendPoint[]>([]);
@@ -36,12 +37,23 @@ const consumerDistLoading = ref(false);
 const zspaceDistLoading = ref(false);
 
 const hasData = computed(() => Boolean(overview.value?.consumer || overview.value?.zspace));
+const canSwitchPrevIncome = computed(() => activeTab.value > 0);
+const canSwitchNextIncome = computed(() => activeTab.value < incomeTabCount - 1);
 const pageState = computed<AppPageStateType>(() => {
   if (loading.value) return 'loading';
   if (loadError.value) return 'error';
   if (!hasData.value) return 'empty';
   return 'ready';
 });
+
+// 主收益区箭头与标题 tab 复用同一状态，保证点击箭头、点击标题、手势滑动三种交互一致。
+const switchIncomeTab = (step: -1 | 1) => {
+  const nextIndex = activeTab.value + step;
+  if (nextIndex < 0 || nextIndex >= incomeTabCount) {
+    return;
+  }
+  activeTab.value = nextIndex;
+};
 
 const formatListTime = (ts?: number) => {
   const raw = formatTime(ts);
@@ -195,14 +207,39 @@ onMounted(() => {
       :min-height="300"
       @retry="load"
     >
-      <van-tabs v-model:active="activeTab" class="home-income-tabs" :border="false" :lazy-render="false" animated swipeable>
-        <van-tab title="消费收益">
-          <ConsumerIncomeBlock v-bind="consumerProps" @period-change="onConsumerPeriodChange" @dist-change="onConsumerDistChange" />
-        </van-tab>
-        <van-tab title="中证收益">
-          <ZSpaceIncomeBlock v-bind="zspaceProps" @period-change="onZspacePeriodChange" @dist-change="onZspaceDistChange" />
-        </van-tab>
-      </van-tabs>
+      <div class="home-income-tabs-wrap">
+        <van-tabs v-model:active="activeTab" class="home-income-tabs" :border="false" :lazy-render="false" animated swipeable>
+          <van-tab title="消费收益">
+            <ConsumerIncomeBlock v-bind="consumerProps" @period-change="onConsumerPeriodChange" @dist-change="onConsumerDistChange" />
+          </van-tab>
+          <van-tab title="中证收益">
+            <ZSpaceIncomeBlock v-bind="zspaceProps" @period-change="onZspacePeriodChange" @dist-change="onZspaceDistChange" />
+          </van-tab>
+        </van-tabs>
+
+        <button
+          type="button"
+          class="home-income-switch home-income-switch-prev"
+          :disabled="!canSwitchPrevIncome"
+          aria-label="切换到上一类收益"
+          @click="switchIncomeTab(-1)"
+        >
+          <svg class="home-income-switch-icon home-income-switch-icon-left" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="home-income-switch home-income-switch-next"
+          :disabled="!canSwitchNextIncome"
+          aria-label="切换到下一类收益"
+          @click="switchIncomeTab(1)"
+        >
+          <svg class="home-income-switch-icon" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
     </AppPageState>
 
   </div>
@@ -334,6 +371,55 @@ onMounted(() => {
 
 .home-income-tabs :deep(.van-tabs__content) {
   margin-top: calc(8 * 100vw / var(--nexa-design-width));
+}
+
+.home-income-tabs-wrap {
+  position: relative;
+}
+
+.home-income-switch {
+  position: absolute;
+  top: calc(120 * 100vw / var(--nexa-design-width));
+  transform: translateY(-50%);
+  width: calc(32 * 100vw / var(--nexa-design-width));
+  height: calc(32 * 100vw / var(--nexa-design-width));
+  border: none;
+  background: transparent;
+  color: #2ab5d3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.home-income-switch:focus-visible {
+  outline: 2px solid rgba(42, 181, 211, 0.35);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.home-income-switch:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.home-income-switch-prev {
+  left: calc(-30 * 100vw / var(--nexa-design-width));
+}
+
+.home-income-switch-next {
+  right: calc(-20 * 100vw / var(--nexa-design-width));
+}
+
+.home-income-switch-icon {
+  width: calc(8 * 100vw / var(--nexa-design-width));
+  height: calc(14 * 100vw / var(--nexa-design-width));
+}
+
+.home-income-switch-icon-left {
+  transform: rotate(180deg);
 }
 
 /* animated+swipeable 模式内部用 van-swipe 通过 JS 测量宽度，
