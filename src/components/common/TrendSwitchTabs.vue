@@ -32,14 +32,14 @@ const emit = defineEmits<{
 }
 
 .switch-tabs :deep(.van-tab) {
-  width: calc(80 * 100vw / var(--nexa-design-width));
-  height: calc(20 * 100vw / var(--nexa-design-width));
+  width: calc(72 * 100vw / var(--nexa-design-width));
+  height: calc(18 * 100vw / var(--nexa-design-width));
   flex: 0 0 auto;
   border: 1px solid transparent;
   border-radius: var(--nexa-radius-sm);
   background: var(--nexa-color-surface-card);
   color: var(--nexa-color-black);
-  font-size: var(--nexa-font-size-8);
+  font-size: calc(8 * 100vw / var(--nexa-design-width)) !important;
   font-weight: 400;
   line-height: 1;
   padding: 0;
@@ -47,6 +47,7 @@ const emit = defineEmits<{
 
 .switch-tabs :deep(.van-tab--active) {
   border-color: var(--nexa-color-brand-primary);
+  font-size: calc(10 * 100vw / var(--nexa-design-width)) !important;
 }
 
 .switch-tabs :deep(.van-tabs__line) {
