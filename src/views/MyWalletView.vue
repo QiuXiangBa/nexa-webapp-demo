@@ -44,6 +44,10 @@ const onSelectAction = (key: string) => {
     router.push('/me/wallet/withdraw').catch(() => undefined);
     return;
   }
+  if (key === 'income-record') {
+    router.push('/me/consume-record').catch(() => undefined);
+    return;
+  }
   message.info('功能建设中');
 };
 </script>
