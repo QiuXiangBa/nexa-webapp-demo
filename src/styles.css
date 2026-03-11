@@ -1,0 +1,475 @@
+@import './styles/tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: transparent;
+}
+
+#app {
+  min-height: 100dvh;
+}
+
+.app-shell {
+  min-height: 100dvh;
+  width: 100vw;
+  background: var(--nexa-gradient-app-shell);
+}
+
+/* Figma 9:2143 Rectangle 418 — 主内容区背景 390×1407 #F9FAFF */
+.mobile-frame {
+  width: 100vw;
+  height: 100dvh;
+  background: var(--nexa-color-surface-page);
+  border-radius: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) var(--tabbar-total-height);
+}
+
+/* 当路由声明不展示底部导航时，外壳退化为单区滚动布局。 */
+.mobile-frame-no-tab {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.mobile-main {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0;
+  background: var(--nexa-color-surface-page);
+}
+
+/* 底部导航栏：业务组件主体统一按宽度轴缩放，dvh 只保留给视口级容器。 */
+.mobile-tabbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* 28px 间隔：避免 px * vw 无效，用 vw 表示 */
+  gap: calc(var(--tabbar-item-gap) * 100vw / var(--nexa-design-width));
+  box-sizing: border-box;
+  padding: 0 calc(var(--tabbar-padding-x) * 100vw / var(--nexa-design-width));
+  min-height: var(--tabbar-total-height);
+  background: var(--nexa-gradient-tabbar);
+  border-top: 1px solid var(--nexa-color-border-soft);
+  padding-bottom: var(--tabbar-safe-bottom);
+}
+
+.tab-item {
+  border: 0;
+  background: transparent;
+  color: var(--nexa-color-text-inverse);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  gap: calc(var(--tabbar-icon-label-gap) * 100vw / var(--nexa-design-width));
+  width: calc(var(--tabbar-item-width) * 100vw / var(--nexa-design-width));
+  min-height: calc(var(--tabbar-item-height) * 100vw / var(--nexa-design-width));
+  margin-top: calc(var(--tabbar-item-offset-y) * 100vw / var(--nexa-design-width));
+  padding: 0;
+  border-radius: calc(var(--tabbar-radius) * 100vw / var(--nexa-design-width));
+  cursor: pointer;
+  position: relative;
+}
+
+.tab-item.active {
+  background: var(--nexa-color-tab-active-bg);
+  width: calc(var(--tabbar-active-width) * 100vw / var(--nexa-design-width));
+  min-height: calc(var(--tabbar-active-height) * 100vw / var(--nexa-design-width));
+  margin-top: calc(var(--tabbar-active-offset-y) * 100vw / var(--nexa-design-width));
+}
+
+.tab-icon {
+  width: calc(var(--tabbar-icon-size) * 100vw / var(--nexa-design-width));
+  height: calc(var(--tabbar-icon-size) * 100vw / var(--nexa-design-width));
+  color: var(--nexa-color-text-inverse);
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.tab-icon-space-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: calc(var(--tabbar-label-font-size) * 100vw / var(--nexa-design-width));
+  font-weight: 500;
+  color: var(--nexa-color-text-inverse);
+  line-height: 1;
+}
+
+.tab-label {
+  font-family: var(--nexa-font-family-accent);
+  font-weight: 500;
+  /* 避免 px * 长度 无效：用 vw 表示（10px @ 390 → 约 2.56vw） */
+  font-size: calc(var(--tabbar-label-font-size) * 100vw / var(--nexa-design-width));
+  line-height: 1.21;
+  color: var(--nexa-color-text-inverse);
+  text-align: center;
+}
+
+.desc {
+  color: var(--nexa-color-text-secondary);
+  font-size: calc(13 * 100vw / var(--nexa-design-width));
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trend-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * 100vw / var(--nexa-design-width));
+}
+
+.trend-row {
+  display: grid;
+  grid-template-columns: calc(56 * 100vw / var(--nexa-design-width)) 1fr calc(72 * 100vw / var(--nexa-design-width));
+  align-items: center;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+}
+
+.trend-date {
+  color: var(--nexa-color-text-secondary);
+  font-size: calc(13 * 100vw / var(--nexa-design-width));
+}
+
+.trend-bar-wrap {
+  height: calc(10 * 100vw / var(--nexa-design-width));
+  background: var(--nexa-color-border-default);
+  border-radius: var(--nexa-radius-full);
+  overflow: hidden;
+}
+
+.trend-bar {
+  height: 100%;
+  border-radius: var(--nexa-radius-full);
+  background: var(--nexa-gradient-trend-bar);
+}
+
+.trend-value {
+  text-align: right;
+  color: var(--nexa-color-text-primary);
+  font-weight: 600;
+  font-size: calc(13 * 100vw / var(--nexa-design-width));
+}
+
+/* ========== 首页 Figma 9:2141 ========== */
+.home-page {
+  min-height: 100%;
+  padding-bottom: calc(24 * 100vw / var(--nexa-design-width));
+}
+
+.home-title {
+  margin: 0 0 calc(12 * 100vw / var(--nexa-design-width));
+  font-family: var(--nexa-font-family-accent);
+  font-weight: 700;
+  font-size: calc(16 * 100vw / var(--nexa-design-width));
+  line-height: 1.21;
+  color: var(--nexa-color-black);
+  text-align: center;
+}
+
+.home-search {
+  margin-bottom: calc(16 * 100vw / var(--nexa-design-width));
+}
+
+.home-search-input {
+  width: 100%;
+  max-width: calc(340 * 100vw / var(--nexa-design-width));
+  height: calc(30 * 100vw / var(--nexa-design-width));
+  padding: 0 calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(8 * 100vw / var(--nexa-design-width));
+  color: var(--nexa-color-black);
+  background: var(--nexa-color-surface-card);
+  border: 1px solid var(--nexa-color-brand-primary);
+  border-radius: var(--nexa-radius-lg);
+  box-shadow: var(--nexa-shadow-soft);
+  outline: none;
+}
+
+.home-search-input::placeholder {
+  color: var(--nexa-color-text-muted);
+}
+
+.home-section {
+  margin-bottom: calc(20 * 100vw / var(--nexa-design-width));
+}
+
+.home-section-title {
+  margin: 0 0 calc(10 * 100vw / var(--nexa-design-width));
+  font-family: var(--nexa-font-family-accent);
+  font-weight: 600;
+  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  line-height: 1.21;
+  color: var(--nexa-color-text-tertiary);
+}
+
+.home-card {
+  width: 100%;
+  max-width: calc(300 * 100vw / var(--nexa-design-width));
+  margin: 0 auto calc(12 * 100vw / var(--nexa-design-width));
+  border: 0;
+  border-radius: var(--nexa-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--nexa-shadow-card);
+}
+
+.home-card-header {
+  padding: calc(12 * 100vw / var(--nexa-design-width)) calc(14 * 100vw / var(--nexa-design-width));
+  background: linear-gradient(180deg, rgba(46, 184, 207, 1) 0%, rgba(1, 116, 174, 1) 100%);
+  border-bottom: 1px solid #2eb8cf;
+  color: #FFFFFF;
+}
+
+.home-card-label {
+  display: block;
+  font-weight: 700;
+  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  margin-bottom: 4px;
+}
+
+.home-card-value {
+  font-weight: 700;
+  font-size: calc(18 * 100vw / var(--nexa-design-width));
+}
+
+.home-card-value em {
+  font-style: normal;
+  font-size: 0.85em;
+  opacity: 0.95;
+}
+
+.home-card-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  padding: calc(8 * 100vw / var(--nexa-design-width)) calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(10 * 100vw / var(--nexa-design-width));
+  color: #B1B1B1;
+  background: #FFFFFF;
+  border: 0;
+  cursor: pointer;
+}
+
+.home-table-wrap {
+  overflow-x: auto;
+  border-radius: 5px;
+  border: 1px solid #E5E7EB;
+  background: #FFFFFF;
+}
+
+.home-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
+}
+
+.home-table th,
+.home-table td {
+  padding: calc(10 * 100vw / var(--nexa-design-width)) calc(10 * 100vw / var(--nexa-design-width));
+  text-align: left;
+  color: #B1B1B1;
+}
+
+.home-table th {
+  font-weight: 600;
+  color: #B1B1B1;
+  background: #F9FAFB;
+}
+
+.home-table td {
+  color: #1f2a37;
+}
+
+.home-trend-tabs {
+  display: flex;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+  margin-bottom: calc(12 * 100vw / var(--nexa-design-width));
+}
+
+.home-trend-tab {
+  padding: calc(6 * 100vw / var(--nexa-design-width)) calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
+  font-weight: 500;
+  color: #000000;
+  background: #FFFFFF;
+  border: 1px solid #3FBBFA;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.home-trend-tab:not(.active) {
+  border-color: transparent;
+  color: #7E818D;
+}
+
+.home-trend-chart {
+  padding: calc(12 * 100vw / var(--nexa-design-width));
+  background: linear-gradient(90deg, rgba(46, 185, 207, 0.95) 0%, rgba(0, 116, 174, 1) 100%);
+  border-radius: 10px;
+}
+
+.home-trend-line-chart {
+  width: 100%;
+  height: 200px;
+  min-height: 160px;
+}
+
+.home-trend-bars {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+}
+
+.home-trend-bar-row {
+  display: grid;
+  grid-template-columns: calc(20 * 100vw / var(--nexa-design-width)) calc(36 * 100vw / var(--nexa-design-width)) 1fr calc(40 * 100vw / var(--nexa-design-width));
+  align-items: center;
+  gap: calc(6 * 100vw / var(--nexa-design-width));
+  font-size: calc(10 * 100vw / var(--nexa-design-width));
+  color: #FFFFFF;
+}
+
+.home-trend-date {
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.home-trend-label {
+  color: #FFFFFF;
+}
+
+.home-trend-bar-wrap {
+  height: calc(8 * 100vw / var(--nexa-design-width));
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.home-trend-bar {
+  height: 100%;
+  min-width: 4px;
+  border-radius: 2px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.home-trend-val {
+  text-align: right;
+  color: #FFFFFF;
+}
+
+.home-distribution-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+  margin-bottom: calc(12 * 100vw / var(--nexa-design-width));
+}
+
+.home-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+  margin-bottom: calc(12 * 100vw / var(--nexa-design-width));
+}
+
+.home-chip {
+  padding: calc(6 * 100vw / var(--nexa-design-width)) calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
+  font-weight: 500;
+  color: #000000;
+  background: #FFFFFF;
+  border: 1px solid #3FBBFA;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.home-chip:not(.active) {
+  border-color: transparent;
+  color: #7E818D;
+}
+
+.home-donut-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(16 * 100vw / var(--nexa-design-width));
+  padding: calc(12 * 100vw / var(--nexa-design-width));
+  background: #F8F8F8;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.home-donut-chart {
+  width: 45%;
+  max-width: calc(150 * 100vw / var(--nexa-design-width));
+  height: calc(160 * 100vw / var(--nexa-design-width));
+  min-height: 140px;
+}
+
+.home-donut-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * 100vw / var(--nexa-design-width));
+}
+
+.home-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+  padding: calc(6 * 100vw / var(--nexa-design-width)) calc(10 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
+  color: #1f2a37;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.home-donut-legend-item.active {
+  background: #2EB8CF;
+  color: #FFFFFF;
+  padding-left: calc(14 * 100vw / var(--nexa-design-width));
+  padding-right: calc(14 * 100vw / var(--nexa-design-width));
+}
+
+.home-donut-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.home-donut-legend-item.active .home-donut-legend-dot {
+  background: #FFFFFF !important;
+}
+
+.home-donut-legend-name {
+  font-weight: 500;
+  flex: 1;
+}
+
+.home-donut-legend-amount {
+  font-weight: 500;
+  color: inherit;
+}

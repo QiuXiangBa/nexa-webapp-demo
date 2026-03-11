@@ -1,0 +1,143 @@
+/*
+ * Nexa UI Design Tokens
+ *
+ * 命名规则：
+ * - 统一前缀：--nexa-
+ * - 分类层：color / font / radius / shadow / space / z / gradient / tabbar
+ * - 语义层：primary / secondary / surface / brand 等
+ *
+ * 使用约定：
+ * 1) 组件优先使用语义 token，不直接写硬编码颜色/阴影/圆角
+ * 2) 页面若需新增视觉值，先补 token 再使用
+ * 3) 设计基线固定 390 x 844，不混用其他基线
+ */
+:root {
+  /* Design baseline */
+  --nexa-design-width: 390;
+  --nexa-design-height: 844;
+  --nexa-scale-w: calc(100vw / var(--nexa-design-width));
+
+  /* Typography */
+  --nexa-font-family-base: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  --nexa-font-family-accent: Inter, 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --nexa-font-size-6: calc(6 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-8: calc(8 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-10: calc(10 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-12: calc(12 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-13: calc(13 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-14: calc(14 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-16: calc(16 * 100vw / var(--nexa-design-width));
+  --nexa-font-size-18: calc(18 * 100vw / var(--nexa-design-width));
+
+  /* Color - semantic */
+  --nexa-color-white: #ffffff;
+  --nexa-color-black: #000000;
+  --nexa-color-text-primary: #0f172a;
+  --nexa-color-text-secondary: #64748b;
+  --nexa-color-text-tertiary: #7e818d;
+  --nexa-color-text-muted: #b1b1b1;
+  --nexa-color-text-brand: #0a81b4;
+  --nexa-color-text-inverse: #ffffff;
+  --nexa-color-overlay-inverse-25: rgba(255, 255, 255, 0.25);
+  --nexa-color-overlay-inverse-50: rgba(255, 255, 255, 0.5);
+  --nexa-color-tab-active-bg: rgba(0, 57, 93, 0.5);
+  --nexa-color-border-default: #e2e8f0;
+  --nexa-color-border-soft: #e4e5e5;
+  --nexa-color-surface-page: #f9faff;
+  --nexa-color-surface-card: #ffffff;
+  --nexa-color-surface-muted: #f8fafc;
+  --nexa-color-brand-primary: #3fbbfa;
+  --nexa-color-brand-strong: #0174af;
+  --nexa-color-brand-alt: #0d87be;
+  --nexa-color-brand-soft: #33b7d1;
+  --nexa-color-brand-info: #1677ff;
+  --nexa-color-chart-line: #9de6ff;
+
+  /* Gradient */
+  --nexa-gradient-app-bg: linear-gradient(180deg, #f6fbff 0%, #eef3ff 100%);
+  --nexa-gradient-app-shell:
+    radial-gradient(1200px 600px at 15% -10%, rgba(56, 189, 248, 0.25) 0%, transparent 60%),
+    radial-gradient(900px 500px at 90% 105%, rgba(2, 132, 199, 0.2) 0%, transparent 62%),
+    linear-gradient(180deg, #edf6ff 0%, #e6efff 100%);
+  --nexa-gradient-tabbar: linear-gradient(92deg, #10c0f3 0%, #0174af 100%);
+  --nexa-gradient-income-card: linear-gradient(180deg, #33b7d1 0%, #0d87be 100%);
+  --nexa-gradient-trend-card: linear-gradient(75deg, #2eb9cf 0%, #0074ae 100%);
+  --nexa-gradient-pie-sample:
+    radial-gradient(circle at center, #f4f6f9 30%, transparent 31%),
+    conic-gradient(#1677ff 0 52%, #45b7ff 52% 70%, #d9dee8 70% 100%);
+  --nexa-gradient-trend-bar: linear-gradient(90deg, #0ea5e9 0%, #22c55e 100%);
+
+  /* Radius */
+  --nexa-radius-xs: calc(2 * 100vw / var(--nexa-design-width));
+  --nexa-radius-sm: calc(5 * 100vw / var(--nexa-design-width));
+  --nexa-radius-md: calc(8 * 100vw / var(--nexa-design-width));
+  --nexa-radius-lg: calc(10 * 100vw / var(--nexa-design-width));
+  --nexa-radius-full: 999px;
+
+  /* Shadow */
+  --nexa-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --nexa-shadow-soft: 0 1px 0 0 rgba(255, 255, 255, 0.24);
+  --nexa-shadow-trend-focus: 0 2px 6px 0 rgba(70, 206, 240, 0.6);
+
+  /* Space (common horizontal rhythm) */
+  --nexa-space-2: calc(2 * 100vw / var(--nexa-design-width));
+  --nexa-space-4: calc(4 * 100vw / var(--nexa-design-width));
+  --nexa-space-6: calc(6 * 100vw / var(--nexa-design-width));
+  --nexa-space-8: calc(8 * 100vw / var(--nexa-design-width));
+  --nexa-space-10: calc(10 * 100vw / var(--nexa-design-width));
+  --nexa-space-12: calc(12 * 100vw / var(--nexa-design-width));
+  --nexa-space-16: calc(16 * 100vw / var(--nexa-design-width));
+
+  /* Z-Index */
+  --nexa-z-base: 1;
+  --nexa-z-sticky: 10;
+  --nexa-z-overlay: 100;
+  --nexa-z-modal: 1000;
+
+  /*
+   * Topbar metrics
+   *
+   * 当前项目历史二级页的 pageContainer 顶部预留普遍为 70。
+   * 这里先将统一顶栏总高度对齐现有视觉基线，避免接入通用顶栏时产生额外位移。
+   * 后续如果统一重做 safe-area 顶部策略，再整体调整这组 token。
+   */
+  --nexa-topbar-total-height: calc(70 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-rich-total-height: calc(92 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-content-height: calc(60 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-side-size: calc(40 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-horizontal-padding: calc(12 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-title-size: calc(16 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-icon-size: calc(18 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-subtitle-gap: calc(6 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-subtitle-size: calc(10 * 100vw / var(--nexa-design-width));
+  --nexa-topbar-subtitle-line-height: calc(14 * 100vw / var(--nexa-design-width));
+
+  /*
+   * Tabbar metrics
+   *
+   * 业务组件统一按宽度轴缩放。
+   * 底部导航虽然贴近屏幕底部，但它本身仍然是业务组件，不应该随屏幕高度拉伸。
+   * safe area 只负责补系统底部留白，不参与组件主体高度缩放。
+   */
+  --tabbar-height: calc(50 * 100vw / var(--nexa-design-width));
+  --tabbar-padding-x: 39;
+  --tabbar-item-width: 40;
+  --tabbar-item-height: 32;
+  --tabbar-item-gap: 28;
+  --tabbar-item-offset-y: 9;
+  --tabbar-active-width: 50;
+  --tabbar-active-height: 36;
+  --tabbar-active-offset-y: 7;
+  --tabbar-icon-size: 18;
+  --tabbar-icon-label-gap: 0;
+  --tabbar-radius: 10;
+  --tabbar-label-font-size: 10;
+  --tabbar-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --tabbar-total-height: calc(var(--tabbar-height) + var(--tabbar-safe-bottom));
+
+  /* Root defaults */
+  font-family: var(--nexa-font-family-base);
+  font-size: var(--nexa-font-size-14);
+  color: var(--nexa-color-text-primary);
+  background: var(--nexa-gradient-app-bg);
+}
