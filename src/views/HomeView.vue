@@ -185,13 +185,6 @@ onMounted(() => {
           </div>
         </van-swipe-item>
       </van-swipe>
-      <div class="home-dot-indicator">
-        <span
-          v-for="(_, i) in notices"
-          :key="i"
-          :class="{ active: noticeIndex === i }"
-        />
-      </div>
     </section>
 
     <AppPageState
