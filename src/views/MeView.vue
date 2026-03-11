@@ -9,7 +9,6 @@ const avatarUrl = '/pages/me/2e35a6da-3c4f-4b89-9ead-c2dd8e078f35.png';
 const badgeIconUrl = '/pages/me/40959180-d20d-46be-b127-d2da834ec1dc.svg';
 const actionExpandUrl = '/pages/me/59ee5673-0337-47bd-8ec6-9a7466563d29.svg';
 const actionQrUrl = '/pages/me/3b910eea-1f81-43d4-a2a5-02ce04e984e5.svg';
-const actionSettingUrl = '/pages/me/793de277-a4e7-4440-9ce9-baa4901f57b4.svg';
 const idCopyIconUrl = '/pages/me/71414263-7fdd-45ae-8d08-46aeec229441.svg';
 const menuWalletIconUrl = '/pages/me/2998d692-d0a6-4055-81d6-66731e840c38.svg';
 const menuConsumeIconUrl = '/pages/me/d56f4969-89dd-4164-a00f-eb4edba063ad.svg';

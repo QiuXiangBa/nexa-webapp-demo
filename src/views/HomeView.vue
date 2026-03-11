@@ -24,7 +24,7 @@ const loading = ref(false);
 const loadError = ref('');
 const overview = ref<HomeOverview | null>(null);
 const activeTab = ref(0);
-const incomeTabCount = 2;
+// const incomeTabCount = 2;
 
 const consumerTrendPoints = ref<HomeTrendPoint[]>([]);
 const zspaceTrendPoints = ref<HomeTrendPoint[]>([]);
@@ -37,8 +37,8 @@ const consumerDistLoading = ref(false);
 const zspaceDistLoading = ref(false);
 
 const hasData = computed(() => Boolean(overview.value?.consumer || overview.value?.zspace));
-const canSwitchPrevIncome = computed(() => activeTab.value > 0);
-const canSwitchNextIncome = computed(() => activeTab.value < incomeTabCount - 1);
+// const canSwitchPrevIncome = computed(() => activeTab.value > 0);
+// const canSwitchNextIncome = computed(() => activeTab.value < incomeTabCount - 1);
 const pageState = computed<AppPageStateType>(() => {
   if (loading.value) return 'loading';
   if (loadError.value) return 'error';
@@ -46,14 +46,14 @@ const pageState = computed<AppPageStateType>(() => {
   return 'ready';
 });
 
-// 主收益区箭头与标题 tab 复用同一状态，保证点击箭头、点击标题、手势滑动三种交互一致。
-const switchIncomeTab = (step: -1 | 1) => {
-  const nextIndex = activeTab.value + step;
-  if (nextIndex < 0 || nextIndex >= incomeTabCount) {
-    return;
-  }
-  activeTab.value = nextIndex;
-};
+// // 主收益区箭头与标题 tab 复用同一状态，保证点击箭头、点击标题、手势滑动三种交互一致。
+// const switchIncomeTab = (step: -1 | 1) => {
+//   const nextIndex = activeTab.value + step;
+//   if (nextIndex < 0 || nextIndex >= incomeTabCount) {
+//     return;
+//   }
+//   activeTab.value = nextIndex;
+// };
 
 const formatListTime = (ts?: number) => {
   const raw = formatTime(ts);
