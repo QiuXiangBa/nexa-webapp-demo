@@ -124,29 +124,44 @@ const goDetail = () => {
     负责：收益总卡片 + 商家收益列表 + 趋势/分布切换
     不负责：页面标题、系统通知、收益类型主 tab -->
   <section class="income-block">
-    <div class="income-card">
-      <div class="income-card-top">
-        <div class="income-title">消费总收益</div>
-        <button class="income-detail-btn" @click="goDetail">查看详情 &gt;</button>
-        <div class="amount-row">
-          <span class="amount">{{ amount }}</span>
-          <span class="unit">{{ unit }}</span>
+    <div class="income-block-body">
+      <button class="card-arrow card-arrow--prev" aria-label="上一项">
+        <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+          <path d="M7 1L1 7L7 13" stroke="#2EB8CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="income-card-wrap">
+        <div class="income-card">
+          <div class="income-card-top">
+            <div class="income-title">消费总收益</div>
+            <button class="income-detail-btn" @click="goDetail">查看详情 &gt;</button>
+            <div class="amount-row">
+              <span class="amount">{{ amount }}</span>
+              <span class="unit">{{ unit }}</span>
+            </div>
+          </div>
+          <div class="income-card-body" :class="{ collapsed: !incomeExpanded }">
+            <ZSpaceIncomeList :rows="listRows" type="consumer" />
+          </div>
+          <button class="income-card-action" @click="toggleExpand">
+            <span>{{ incomeExpanded ? '点击收起' : '点击展开' }}</span>
+            <svg
+                class="action-arrow"
+                :class="{ expanded: incomeExpanded }"
+                width="10" height="6" viewBox="0 0 10 6" fill="none"
+            >
+              <path d="M1 1L5 5L9 1" stroke="#b1b1b1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <div class="income-card-body" :class="{ collapsed: !incomeExpanded }">
-        <ZSpaceIncomeList :rows="listRows" type="consumer" />
-      </div>
-      <button class="income-card-action" @click="toggleExpand">
-        <span>{{ incomeExpanded ? '点击收起' : '点击展开' }}</span>
-        <svg
-          class="action-arrow"
-          :class="{ expanded: incomeExpanded }"
-          width="10" height="6" viewBox="0 0 10 6" fill="none"
-        >
-          <path d="M1 1L5 5L9 1" stroke="#b1b1b1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <button class="card-arrow card-arrow--next" aria-label="下一项">
+        <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+          <path d="M1 1L7 7L1 13" stroke="#2EB8CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
+
 
     <van-tabs v-model:active="chartMode" class="section-mode-tabs" :border="false">
       <van-tab title="收益趋势" name="trend" />
@@ -163,7 +178,7 @@ const goDetail = () => {
       <van-swipe-item class="chart-swipe-item">
         <div class="trend-panel">
           <button
-            class="period-arrow"
+            class="period-arrow period-arrow--prev"
             :class="{ invisible: trendIndex === 0 }"
             :disabled="trendIndex === 0"
             aria-label="上一周期"
@@ -181,7 +196,7 @@ const goDetail = () => {
             </div>
           </div>
           <button
-            class="period-arrow"
+            class="period-arrow period-arrow--next"
             :class="{ invisible: trendIndex === TREND_OPTIONS.length - 1 }"
             :disabled="trendIndex === TREND_OPTIONS.length - 1"
             aria-label="下一周期"
@@ -210,6 +225,44 @@ const goDetail = () => {
   flex-direction: column;
   gap: calc(14 * 100vw / var(--nexa-design-width));
   width: calc(340 * 100vw / var(--nexa-design-width));
+}
+.income-block-body{
+  display: flex;
+  flex-direction: row;
+}
+
+.income-card-wrap {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.card-arrow {
+  flex: 0 0 auto;
+  width: calc(20 * 100vw / var(--nexa-design-width));
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding-top: calc(30 * 100vw / var(--nexa-design-width));
+  cursor: pointer;
+  transition: opacity 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-arrow--prev {
+  left: calc(-20 * 100vw / var(--nexa-design-width));
+  transform: translateX(calc(-5 * 100vw / var(--nexa-design-width)));
+}
+
+.card-arrow--next {
+  right: calc(-10 * 100vw / var(--nexa-design-width));
+  transform: translateX(calc(5 * 100vw / var(--nexa-design-width)));
+}
+
+.card-arrow:active svg path {
+  stroke: var(--nexa-color-brand-primary);
 }
 
 .income-card {
@@ -403,7 +456,12 @@ const goDetail = () => {
   width: 100%;
   gap: 0;
 }
-
+.period-arrow--prev{
+  transform: translateX(calc(-5 * 100vw / var(--nexa-design-width)));
+}
+.period-arrow--next{
+  transform: translateX(calc(5 * 100vw / var(--nexa-design-width)));
+}
 .period-arrow {
   flex: 0 0 auto;
   width: calc(20 * 100vw / var(--nexa-design-width));
@@ -414,6 +472,7 @@ const goDetail = () => {
   background: transparent;
   border: none;
   padding: 0;
+  padding-top: calc(10 * 100vw / var(--nexa-design-width));
   cursor: pointer;
   transition: opacity 0.2s;
   -webkit-tap-highlight-color: transparent;
