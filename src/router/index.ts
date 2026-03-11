@@ -60,6 +60,22 @@ const router = createRouter({
           }
         },
         {
+          path: '/merchant-map/location-manage',
+          name: 'merchant-map-location-manage',
+          component: () => import('@/views/LocationManageView.vue'),
+          meta: {
+            showBottomTab: false,
+            pageContainer: {
+              paddingTop: 0,
+              paddingBottom: 0,
+              paddingX: 0,
+              background: 'var(--nexa-color-surface-page)',
+              fullHeight: true,
+              withSafeBottom: false
+            }
+          }
+        },
+        {
           path: '/space',
           name: 'space',
           component: () => import('@/views/SpaceView.vue'),

@@ -93,14 +93,9 @@ const toggleSheet = () => {
 // 地图页交互约定：
 // 1) 点击商家 marker 或列表卡片，进入“商家详情”态；
 // 2) 收起抽屉不丢失选中状态，重新展开仍展示当前商家详情；
-// 3) 在详情态点击地址行可回到列表态，继续切换商家。
+// 3) 点击地址行跳转到“定位管理”页。
 const openMerchantDetail = (item: MerchantMapDetailModel) => {
   selectedMerchantId.value = item.id;
-  isSheetCollapsed.value = false;
-};
-
-const backToMerchantList = () => {
-  selectedMerchantId.value = null;
   isSheetCollapsed.value = false;
 };
 
@@ -109,9 +104,7 @@ const triggerSearch = () => {
 };
 
 const handleAddressRowClick = () => {
-  if (selectedMerchant.value) {
-    backToMerchantList();
-  }
+  router.push('/merchant-map/location-manage').catch(() => undefined);
 };
 
 const openMerchantAssetDetail = () => {

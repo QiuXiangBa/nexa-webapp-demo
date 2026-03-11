@@ -86,6 +86,10 @@ const openMapDefaultMode = () => {
   router.push('/merchant-map/default').catch(() => undefined);
 };
 
+const openLocationManage = () => {
+  router.push('/merchant-map/location-manage').catch(() => undefined);
+};
+
 // 交互约定：
 // 1) "附近" 分类展示全部商家，其他分类按 categoryKey 过滤
 // 2) 地图列表由服务端API返回，定位图与距离文案仍为前端占位
@@ -153,11 +157,11 @@ onBeforeUnmount(() => {
         />
       </button>
 
-      <div class="merchant-map-address">
+      <button type="button" class="merchant-map-address" @click="openLocationManage">
         <img src="/pages/merchant-map/e45528a0-c98e-48b7-84c3-d93568a427ad.svg" alt="定位" class="merchant-map-address-icon" />
         <span class="merchant-map-address-text">用户所在地地址 - A幢</span>
         <span class="merchant-map-address-arrow">›</span>
-      </div>
+      </button>
     </section>
 
     <div class="merchant-map-divider" />
@@ -271,6 +275,10 @@ onBeforeUnmount(() => {
 .merchant-map-address {
   margin-top: calc(10 * 100vw / var(--nexa-design-width));
   height: calc(20 * 100vw / var(--nexa-design-width));
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
   display: flex;
   align-items: center;
 }
