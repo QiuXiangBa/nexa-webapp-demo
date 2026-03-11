@@ -212,7 +212,7 @@ onMounted(() => {
 .home-page {
   display: flex;
   flex-direction: column;
-  gap: calc(12 * 100vw / var(--nexa-design-width));
+  gap: calc(20 * 100vw / var(--nexa-design-width));
 }
 
 .home-header-section {
@@ -303,7 +303,7 @@ onMounted(() => {
 }
 
 .home-income-tabs :deep(.van-tabs__wrap) {
-  height: calc(30 * 100vw / var(--nexa-design-width));
+  height: calc(38 * 100vw / var(--nexa-design-width));
 }
 
 .home-income-tabs :deep(.van-tabs__nav) {
@@ -314,16 +314,16 @@ onMounted(() => {
 .home-income-tabs :deep(.van-tab) {
   flex: 0 0 auto;
   padding: 0;
-  margin-right: calc(18 * 100vw / var(--nexa-design-width));
-  font-size: calc(8 * 100vw / var(--nexa-design-width));
-  line-height: calc(30 * 100vw / var(--nexa-design-width));
+  margin-right: calc(22 * 100vw / var(--nexa-design-width));
+  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  line-height: calc(38 * 100vw / var(--nexa-design-width));
   color: var(--nexa-color-text-tertiary);
   font-weight: 600;
   transition: font-size 0.2s;
 }
 
 .home-income-tabs :deep(.van-tab--active) {
-  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(16 * 100vw / var(--nexa-design-width));
   color: var(--nexa-color-black);
   font-weight: 700;
 }

@@ -150,7 +150,7 @@ const goDetail = () => {
 .income-block {
   display: flex;
   flex-direction: column;
-  gap: calc(8 * 100vw / var(--nexa-design-width));
+  gap: calc(14 * 100vw / var(--nexa-design-width));
 }
 
 .income-card {
@@ -162,27 +162,27 @@ const goDetail = () => {
 
 .income-card-top {
   position: relative;
-  height: calc(120 * 100vw / var(--nexa-design-width));
+  height: calc(140 * 100vw / var(--nexa-design-width));
   background: linear-gradient(180deg, #2eb8cf 0%, #0174ae 100%);
   color: #fff;
   text-align: center;
-  padding-top: calc(7 * 100vw / var(--nexa-design-width));
+  padding-top: calc(10 * 100vw / var(--nexa-design-width));
 }
 
 .income-title {
-  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(16 * 100vw / var(--nexa-design-width));
   font-weight: 700;
-  line-height: calc(30 * 100vw / var(--nexa-design-width));
+  line-height: calc(34 * 100vw / var(--nexa-design-width));
 }
 
 .income-detail-btn {
   position: absolute;
-  top: calc(8 * 100vw / var(--nexa-design-width));
+  top: calc(12 * 100vw / var(--nexa-design-width));
   right: calc(10 * 100vw / var(--nexa-design-width));
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.85);
-  font-size: calc(8 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -272,14 +272,14 @@ const goDetail = () => {
 
 .income-card-action {
   width: 100%;
-  height: calc(28 * 100vw / var(--nexa-design-width));
+  height: calc(36 * 100vw / var(--nexa-design-width));
   display: flex;
   align-items: center;
   justify-content: center;
   gap: calc(4 * 100vw / var(--nexa-design-width));
   background: transparent;
   border: none;
-  font-size: calc(8 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
   color: #b1b1b1;
   cursor: pointer;
 }
@@ -294,24 +294,24 @@ const goDetail = () => {
 }
 
 .section-mode-tabs {
-  margin-top: calc(2 * 100vw / var(--nexa-design-width));
+  margin-top: calc(4 * 100vw / var(--nexa-design-width));
 }
 
 .section-mode-tabs :deep(.van-tabs__wrap) {
-  height: calc(24 * 100vw / var(--nexa-design-width));
+  height: calc(32 * 100vw / var(--nexa-design-width));
 }
 
 .section-mode-tabs :deep(.van-tab) {
   flex: 0 0 auto;
-  min-width: calc(56 * 100vw / var(--nexa-design-width));
+  min-width: calc(64 * 100vw / var(--nexa-design-width));
   color: #7e818d;
-  font-size: calc(8 * 100vw / var(--nexa-design-width));
+  font-size: calc(11 * 100vw / var(--nexa-design-width));
   font-weight: 600;
 }
 
 .section-mode-tabs :deep(.van-tab--active) {
   color: #000;
-  font-size: calc(12 * 100vw / var(--nexa-design-width));
+  font-size: calc(14 * 100vw / var(--nexa-design-width));
   font-weight: 700;
 }
 
