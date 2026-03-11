@@ -225,7 +225,7 @@ onMounted(() => {
           @click="switchIncomeTab(-1)"
         >
           <svg class="home-income-switch-icon home-income-switch-icon-left" viewBox="0 0 8 14" fill="none" aria-hidden="true">
-            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="#2EB8CF" stroke-width="1.4" stroke-linecap="round" />
           </svg>
         </button>
         <button
@@ -236,7 +236,7 @@ onMounted(() => {
           @click="switchIncomeTab(1)"
         >
           <svg class="home-income-switch-icon" viewBox="0 0 8 14" fill="none" aria-hidden="true">
-            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            <path d="M0.7 0.7L6.7 6.7L0.7 12.7" stroke="#2EB8CF" stroke-width="1.4" stroke-linecap="round" />
           </svg>
         </button>
       </div>

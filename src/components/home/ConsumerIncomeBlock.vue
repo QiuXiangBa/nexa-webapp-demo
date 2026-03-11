@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import { message } from '@/utils/message';
 import type { SwipeInstance } from 'vant';
 import TrendSwitchTabs from '@/components/common/TrendSwitchTabs.vue';
@@ -71,15 +71,25 @@ const emit = defineEmits<{
   (e: 'dist-change', tab: string): void;
 }>();
 
+const TREND_OPTIONS = ['7日趋势', '30日趋势', '90日趋势'] as const;
 const trendPeriodMap: Record<string, 7 | 30 | 90> = { '7日趋势': 7, '30日趋势': 30, '90日趋势': 90 };
 
-const trendTab = ref('7日趋势');
+const trendTab = ref<string>('7日趋势');
 const distTab = ref(props.distOptions[0] || '消费类型');
+
+const trendIndex = computed(() => TREND_OPTIONS.indexOf(trendTab.value as typeof TREND_OPTIONS[number]));
 
 const onTrendTabChange = (val: string) => {
   trendTab.value = val;
   const period = trendPeriodMap[val];
   if (period) emit('period-change', period);
+};
+
+const prevTrend = () => {
+  if (trendIndex.value > 0) onTrendTabChange(TREND_OPTIONS[trendIndex.value - 1]);
+};
+const nextTrend = () => {
+  if (trendIndex.value < TREND_OPTIONS.length - 1) onTrendTabChange(TREND_OPTIONS[trendIndex.value + 1]);
 };
 
 const onDistTabChange = (val: string) => {
@@ -151,10 +161,36 @@ const goDetail = () => {
       @change="onSwipeChange"
     >
       <van-swipe-item class="chart-swipe-item">
-        <TrendSwitchTabs :model-value="trendTab" @update:model-value="onTrendTabChange" />
-        <div class="income-chart-wrap">
-          <TrendChartCard class="income-chart-card" :points="trendPoints" />
-          <div v-if="trendLoading" class="income-chart-loading" />
+        <div class="trend-panel">
+          <button
+            class="period-arrow"
+            :class="{ invisible: trendIndex === 0 }"
+            :disabled="trendIndex === 0"
+            aria-label="上一周期"
+            @click="prevTrend"
+          >
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+              <path d="M7 1L1 7L7 13" stroke="#2EB8CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="trend-body">
+            <TrendSwitchTabs :model-value="trendTab" @update:model-value="onTrendTabChange" />
+            <div class="income-chart-wrap">
+              <TrendChartCard class="income-chart-card" :points="trendPoints" />
+              <div v-if="trendLoading" class="income-chart-loading" />
+            </div>
+          </div>
+          <button
+            class="period-arrow"
+            :class="{ invisible: trendIndex === TREND_OPTIONS.length - 1 }"
+            :disabled="trendIndex === TREND_OPTIONS.length - 1"
+            aria-label="下一周期"
+            @click="nextTrend"
+          >
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+              <path d="M1 1L7 7L1 13" stroke="#2EB8CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
       </van-swipe-item>
       <van-swipe-item class="chart-swipe-item">
@@ -357,11 +393,47 @@ const goDetail = () => {
 }
 
 .chart-swipe-item {
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.trend-panel {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+}
+
+.period-arrow {
+  flex: 0 0 auto;
+  width: calc(20 * 100vw / var(--nexa-design-width));
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.period-arrow:not(:disabled):active svg path {
+  stroke: var(--nexa-color-brand-primary);
+}
+
+.period-arrow.invisible {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.trend-body {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: calc(8 * 100vw / var(--nexa-design-width));
-  height: auto !important;
-  box-sizing: border-box;
 }
 
 .income-chart-wrap {
