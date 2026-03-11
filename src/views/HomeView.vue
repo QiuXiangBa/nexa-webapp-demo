@@ -169,7 +169,7 @@ onMounted(() => {
       <h1 class="home-title">数字资产收益</h1>
       <van-swipe
         class="home-notice-swipe"
-        :autoplay="0"
+        :autoplay="3000"
         :show-indicators="false"
         vertical
         @change="(i) => noticeIndex = i"
