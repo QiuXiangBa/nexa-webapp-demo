@@ -29,7 +29,8 @@ const props = defineProps<{
 
 <style scoped>
 .expert-record-group {
-  margin-top: calc(8 * 100vw / var(--nexa-design-width));
+  display: flex;
+  flex-direction: column;
 }
 
 .group-date {

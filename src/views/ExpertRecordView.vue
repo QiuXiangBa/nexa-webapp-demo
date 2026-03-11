@@ -8,45 +8,84 @@ import ExpertRecordGroup from '@/components/expert-record/ExpertRecordGroup.vue'
 // 不负责：底部导航和全局壳层（由 LayoutView 管理）
 const activeTab = ref<'user' | 'merchant'>('user');
 
-const userGroups = [
-  {
-    dateLabel: '2026年02月03日',
-    items: [
-      { id: 'u-1', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
-      { id: 'u-2', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
-      { id: 'u-3', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
-      { id: 'u-4', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' }
-    ]
-  },
-  {
-    dateLabel: '2026年02月02日',
-    items: [
-      { id: 'u-5', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
-      { id: 'u-6', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '拒绝', statusClass: 'reject' }
-    ]
-  },
-  {
-    dateLabel: '2026年02月01日',
-    items: [
-      { id: 'u-7', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
-      { id: 'u-8', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
-      { id: 'u-9', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
-      { id: 'u-10', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
-      { id: 'u-11', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
-      { id: 'u-12', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' }
-    ]
-  }
-] as const;
+type ExpertRecordStatusClass = 'pending' | 'pass' | 'reject';
 
-const merchantGroups = [
+interface ExpertRecordItemModel {
+  id: string;
+  nickname: string;
+  authTypeText: string;
+  statusText: string;
+  statusClass: ExpertRecordStatusClass;
+}
+
+interface ExpertRecordDateGroup {
+  dateLabel: string;
+  items: ExpertRecordItemModel[];
+}
+
+interface ExpertRecordSection {
+  key: string;
+  title: string;
+  groups: ExpertRecordDateGroup[];
+}
+
+const userSections: ExpertRecordSection[] = [
   {
-    dateLabel: '2026年02月03日',
-    items: [
-      { id: 'm-1', nickname: '商家昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
-      { id: 'm-2', nickname: '商家昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' }
+    key: 'pending',
+    title: '未完成用户',
+    groups: [
+      {
+        dateLabel: '2026年02月03日',
+        items: [
+          { id: 'u-1', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
+          { id: 'u-2', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
+          { id: 'u-3', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
+          { id: 'u-4', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' }
+        ]
+      },
+      {
+        dateLabel: '2026年02月02日',
+        items: [
+          { id: 'u-5', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
+          { id: 'u-6', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '拒绝', statusClass: 'reject' }
+        ]
+      }
+    ]
+  },
+  {
+    key: 'completed',
+    title: '已完成用户',
+    groups: [
+      {
+        dateLabel: '2026年02月01日',
+        items: [
+          { id: 'u-7', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
+          { id: 'u-8', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
+          { id: 'u-9', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
+          { id: 'u-10', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
+          { id: 'u-11', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' },
+          { id: 'u-12', nickname: '用户昵称', authTypeText: '扫码授权', statusText: '已通过', statusClass: 'pass' }
+        ]
+      }
     ]
   }
-] as const;
+];
+
+const merchantSections: ExpertRecordSection[] = [
+  {
+    key: 'merchant-pending',
+    title: '未完成商家',
+    groups: [
+      {
+        dateLabel: '2026年02月03日',
+        items: [
+          { id: 'm-1', nickname: '商家昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' },
+          { id: 'm-2', nickname: '商家昵称', authTypeText: '扫码授权', statusText: '审核中', statusClass: 'pending' }
+        ]
+      }
+    ]
+  }
+];
 
 </script>
 
@@ -60,17 +99,28 @@ const merchantGroups = [
           <van-tabs v-model:active="activeTab" class="record-tabs" :border="false" animated swipeable>
             <van-tab title="用户授权" name="user">
               <div class="tab-content">
-                <ExpertRecordGroup v-for="group in userGroups" :key="group.dateLabel" :date-label="group.dateLabel" :items="group.items" />
+                <section v-for="section in userSections" :key="section.key" class="record-section">
+                  <h3 class="record-section-title">{{ section.title }}</h3>
+                  <ExpertRecordGroup
+                    v-for="group in section.groups"
+                    :key="`${section.key}-${group.dateLabel}`"
+                    :date-label="group.dateLabel"
+                    :items="group.items"
+                  />
+                </section>
               </div>
             </van-tab>
             <van-tab title="商家授权" name="merchant">
               <div class="tab-content">
-                <ExpertRecordGroup
-                  v-for="group in merchantGroups"
-                  :key="`merchant-${group.dateLabel}`"
-                  :date-label="group.dateLabel"
-                  :items="group.items"
-                />
+                <section v-for="section in merchantSections" :key="section.key" class="record-section">
+                  <h3 class="record-section-title">{{ section.title }}</h3>
+                  <ExpertRecordGroup
+                    v-for="group in section.groups"
+                    :key="`${section.key}-${group.dateLabel}`"
+                    :date-label="group.dateLabel"
+                    :items="group.items"
+                  />
+                </section>
               </div>
             </van-tab>
           </van-tabs>
@@ -147,6 +197,20 @@ const merchantGroups = [
   padding-top: calc(8 * 100vw / var(--nexa-design-width));
   display: flex;
   flex-direction: column;
-  gap: calc(8 * 100vw / var(--nexa-design-width));
+  gap: calc(10 * 100vw / var(--nexa-design-width));
+}
+
+.record-section {
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * 100vw / var(--nexa-design-width));
+}
+
+.record-section-title {
+  margin: 0;
+  color: #000;
+  font-size: calc(8 * 100vw / var(--nexa-design-width));
+  font-weight: 700;
+  line-height: calc(16 * 100vw / var(--nexa-design-width));
 }
 </style>
