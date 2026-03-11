@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { message } from '@/utils/message';
+import type { SwipeInstance } from 'vant';
 import TrendSwitchTabs from '@/components/common/TrendSwitchTabs.vue';
 import TrendChartCard from '@/components/common/TrendChartCard.vue';
 import DistributionSwitchTabs from '@/components/common/DistributionSwitchTabs.vue';
@@ -88,6 +89,19 @@ const onDistTabChange = (val: string) => {
 };
 const chartMode = ref<'trend' | 'distribution'>('trend');
 const incomeExpanded = ref(false);
+const swipeRef = ref<SwipeInstance>();
+
+// tab 点击 → 驱动 swipe 滑到对应面板
+watch(chartMode, (val) => {
+  nextTick(() => {
+    swipeRef.value?.swipeTo(val === 'trend' ? 0 : 1);
+  });
+});
+
+// swipe 手势完成 → 同步 tab 选中状态
+const onSwipeChange = (index: number) => {
+  chartMode.value = index === 0 ? 'trend' : 'distribution';
+};
 
 const toggleExpand = () => {
   incomeExpanded.value = !incomeExpanded.value;
@@ -129,20 +143,28 @@ const goDetail = () => {
       <van-tab title="收益分布" name="distribution" />
     </van-tabs>
 
-    <template v-if="chartMode === 'trend'">
-      <TrendSwitchTabs :model-value="trendTab" @update:model-value="onTrendTabChange" />
-      <div class="income-chart-wrap">
-        <TrendChartCard class="income-chart-card" :points="trendPoints" />
-        <div v-if="trendLoading" class="income-chart-loading" />
-      </div>
-    </template>
-    <template v-else>
-      <DistributionSwitchTabs :model-value="distTab" :options="distOptions" @update:model-value="onDistTabChange" />
-      <div class="income-chart-wrap">
-        <DistributionPieLegend :items="distItems" />
-        <div v-if="distLoading" class="income-chart-loading" />
-      </div>
-    </template>
+    <van-swipe
+      ref="swipeRef"
+      class="chart-swipe"
+      :loop="false"
+      :show-indicators="false"
+      @change="onSwipeChange"
+    >
+      <van-swipe-item class="chart-swipe-item">
+        <TrendSwitchTabs :model-value="trendTab" @update:model-value="onTrendTabChange" />
+        <div class="income-chart-wrap">
+          <TrendChartCard class="income-chart-card" :points="trendPoints" />
+          <div v-if="trendLoading" class="income-chart-loading" />
+        </div>
+      </van-swipe-item>
+      <van-swipe-item class="chart-swipe-item">
+        <DistributionSwitchTabs :model-value="distTab" :options="distOptions" @update:model-value="onDistTabChange" />
+        <div class="income-chart-wrap">
+          <DistributionPieLegend :items="distItems" />
+          <div v-if="distLoading" class="income-chart-loading" />
+        </div>
+      </van-swipe-item>
+    </van-swipe>
   </section>
 </template>
 
@@ -151,6 +173,7 @@ const goDetail = () => {
   display: flex;
   flex-direction: column;
   gap: calc(14 * 100vw / var(--nexa-design-width));
+  width: calc(340 * 100vw / var(--nexa-design-width));
 }
 
 .income-card {
@@ -320,9 +343,26 @@ const goDetail = () => {
 }
 
 .section-mode-tabs :deep(.van-tabs__content) {
+  display: none;
+}
+
+.chart-swipe {
+  width: 100%;
   margin-top: calc(8 * 100vw / var(--nexa-design-width));
 }
 
+/* 允许各面板高度自适应内容 */
+.chart-swipe :deep(.van-swipe__track) {
+  align-items: flex-start;
+}
+
+.chart-swipe-item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * 100vw / var(--nexa-design-width));
+  height: auto !important;
+  box-sizing: border-box;
+}
 
 .income-chart-wrap {
   position: relative;
