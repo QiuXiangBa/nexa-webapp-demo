@@ -94,9 +94,6 @@ const onMenuClick = (item: MenuItem) => {
         <button type="button" class="action-btn" @click="onOpenPayReceiveCode">
           <img :src="actionQrUrl" alt="" />
         </button>
-        <button type="button" class="action-btn" @click="onAction">
-          <img :src="actionSettingUrl" alt="" />
-        </button>
       </div>
     </section>
 
@@ -121,7 +118,7 @@ const onMenuClick = (item: MenuItem) => {
   height: calc(129 * 100vw / var(--nexa-design-width));
   background: #fff;
   border-radius: 0 0 calc(10 * 100vw / var(--nexa-design-width)) calc(10 * 100vw / var(--nexa-design-width));
-  padding: calc(24 * 100vw / var(--nexa-design-width)) calc(20 * 100vw / var(--nexa-design-width)) 0;
+  padding: calc(24 * 100vw / var(--nexa-design-width)) calc(24 * 100vw / var(--nexa-design-width)) 0;
   display: flex;
   justify-content: space-between;
 }
@@ -202,13 +199,13 @@ const onMenuClick = (item: MenuItem) => {
 .profile-actions {
   display: flex;
   align-items: center;
-  gap: calc(14 * 100vw / var(--nexa-design-width));
+  gap: calc(20 * 100vw / var(--nexa-design-width));
   margin-top: calc(4 * 100vw / var(--nexa-design-width));
 }
 
 .action-btn img {
-  width: calc(14 * 100vw / var(--nexa-design-width));
-  height: calc(14 * 100vw / var(--nexa-design-width));
+  width: calc(20 * 100vw / var(--nexa-design-width));
+  height: calc(20 * 100vw / var(--nexa-design-width));
 }
 
 .me-menu-list {
