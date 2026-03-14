@@ -304,13 +304,6 @@ onBeforeUnmount(() => {
         </AppPageState>
       </van-tab>
     </van-tabs>
-
-    <div class="trade-frosted-mask" aria-live="polite" aria-label="功能建设中">
-      <div class="trade-frosted-content">
-        <div class="trade-frosted-pill">功能建设中</div>
-        <p class="trade-frosted-tip">敬请期待</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -319,48 +312,6 @@ onBeforeUnmount(() => {
   /* 页面容器留白交给 PageContainer，页面内只保留区块编排。 */
   display: flex;
   flex-direction: column;
-}
-
-.trade-frosted-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: var(--tabbar-total-height);
-  z-index: 260;
-  background: rgba(246, 248, 252, 0.6);
-  backdrop-filter: blur(calc(10 * 100vw / var(--nexa-design-width)));
-  -webkit-backdrop-filter: blur(calc(10 * 100vw / var(--nexa-design-width)));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.trade-frosted-content {
-  margin-top: calc(-90 * 100vw / var(--nexa-design-width));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.trade-frosted-pill {
-  width: calc(240 * 100vw / var(--nexa-design-width));
-  height: calc(40 * 100vw / var(--nexa-design-width));
-  border-radius: calc(20 * 100vw / var(--nexa-design-width));
-  background: linear-gradient(180deg, #4cbaf2 0%, #3faee8 100%);
-  color: #fff;
-  font-size: calc(26 / 3 * 100vw / var(--nexa-design-width));
-  line-height: calc(40 * 100vw / var(--nexa-design-width));
-  font-weight: 700;
-  text-align: center;
-}
-
-.trade-frosted-tip {
-  margin: calc(18 * 100vw / var(--nexa-design-width)) 0 0;
-  color: #151515;
-  font-size: calc(16 * 100vw / var(--nexa-design-width));
-  line-height: 1.2;
-  font-weight: 700;
 }
 
 .trade-title {
